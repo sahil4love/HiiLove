@@ -1,0 +1,102 @@
+ /* Custom styles for the overall look and feel */
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #1a080d; /* Deep burgundy/dark red background */
+            color: #f7e6e9; /* Off-white/light pink text */
+            line-height: 1.6;
+            overflow-x: hidden; /* Crucial for mobile responsiveness */
+            scroll-behavior: smooth;
+        }
+
+        /* Define pulse animation for dramatic countdown */
+        @keyframes pulse-once {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .heart-gradient {
+            /* A subtle gradient for text and accents */
+            background: linear-gradient(135deg, #FF69B4, #FF1493, #DDA0DD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .animate-dramatic-pulse {
+            animation: pulse-once 1s infinite;
+        }
+
+        .card-bg {
+            background-color: rgba(43, 11, 16, 0.7); /* Semi-transparent dark card */
+            backdrop-filter: blur(5px);
+            border-left: 4px solid #FFD700; /* Gold accent */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-bg:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        /* Timeline vertical line (Desktop default) */
+        #timeline {
+            position: relative;
+        }
+
+        #timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%; /* Center the line on Desktop */
+            width: 3px;
+            background-color: #FFD700; /* Gold line */
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        /* *** Mobile Responsiveness Rules (for Poco C55 / screens <= 768px) ***
+        We collapse the two-sided timeline into a single column, pushed to the right of the line.
+        */
+        @media (max-width: 768px) {
+            /* Move line far left for better readability space */
+            #timeline::before {
+                left: 5%;
+            }
+            /* Hide the centered desktop dot */
+            .timeline-item > .md\:block {
+                display: none !important;
+            }
+            /* Add padding to the item to make room for the mobile dot/line */
+            .timeline-item {
+                padding-left: 10%; 
+            }
+            /* All content cards are now full width on mobile, and pushed right */
+            .timeline-item .timeline-content {
+                /* Set width relative to the new padding */
+                width: 100% !important; 
+                margin-left: 0 !important; 
+                margin-right: 0 !important;
+            }
+            /* Remove the desktop reversal of content order on odd items */
+            .timeline-item.md\:flex-row-reverse {
+                flex-direction: column; 
+            }
+
+            /* Add a simple visual dot indicator next to the line on mobile */
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: 5%;
+                top: 10px; /* Position next to the line */
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: #FF69B4;
+                border: 3px solid #f7e6e9;
+                transform: translateX(-50%);
+                z-index: 10;
+            }
+        }
